@@ -5,12 +5,12 @@
 
 <mapper namespace="com.julien.mapper.CompetitionListMapper">
 
-    <select id="listByAdmin" resultType="Competition">
+    <select id="listByAdmin" resultType="com.julien.entity.Competition">
         select * from competition
         order by create_time desc
     </select>
 
-    <select id="listByCaptain" resultType="Competition">
+    <select id="listByCaptain" resultType="com.julien.entity.Competition">
         SELECT DISTINCT c.*
         FROM competition c
         JOIN user u ON u.com_id = c.id

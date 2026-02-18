@@ -9,4 +9,6 @@ public interface PlayerService {
     User login(LoginDTO loginDTO);
 
     Competition competitionList();
+
+
 }

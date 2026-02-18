@@ -62,15 +62,15 @@ public class PlayerController {
 
     @GetMapping("/competitions")
     @ApiOperation("获取比赛列表")
-    public Result<CompetitionListVO> competitionList(){
+    public Result<Competition> competitionList(){
         log.info("获取比赛列表");
 
-        Long userCode = BaseContext.getCurrentId();
-        String role = BaseContext.getCurrentRole();
+        String userCode = BaseContext.getCurrentId();
+        Long role = BaseContext.getCurrentRole();
 
-        Competition competition = playerService.competitionlists();
+        Competition competition = playerService.competitionList();
 
-        ruturn Result.success(CompetitionListVO);
+        return Result.success(competition);
 
     }
 }

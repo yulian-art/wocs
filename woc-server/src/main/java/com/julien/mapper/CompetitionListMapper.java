@@ -11,6 +11,7 @@ public interface CompetitionListMapper {
 
     List<Competition> listByAdmin();
 
-    List<Competition> listByCaptain(User com_id);
 
+
+    List<Competition> listByCaptain(Integer comId);
 }

@@ -34,8 +34,8 @@ public class JwtTokenInterceptor implements HandlerInterceptor {
             //用存储的key解密截取的token
             Claims claims = JwtUtil.parseJWT(jwtProperties.getSecretKey(), token);
 
-            Long userCode = Long.valueOf(claims.get(JwtClaimsConstant.USER_CODE).toString());
-            String role = claims.get(JwtClaimsConstant.ROLE).toString();
+            String userCode = claims.get(JwtClaimsConstant.USER_CODE).toString();
+            Long role = Long.valueOf(claims.get(JwtClaimsConstant.ROLE).toString());
             BaseContext.setCurrentId(userCode);
             BaseContext.setCurrentRole(role);
             return true;

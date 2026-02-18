@@ -2,14 +2,15 @@ package com.julien.context;
 
 public class BaseContext {
 
-    private static ThreadLocal<Long> userIdHolder = new ThreadLocal<>();
-    private static ThreadLocal<String> roleHolder = new ThreadLocal<>();
+    private static ThreadLocal<String> userIdHolder = new ThreadLocal<>();
+    private static ThreadLocal<Long> roleHolder = new ThreadLocal<>();
 
-    public static void setCurrentId(Long id) {
+    private static ThreadLocal<Integer> comIdHolder = new ThreadLocal<>();
+    public static void setCurrentId(String id) {
         userIdHolder.set(id);
     }
 
-    public static Long getCurrentId() {
+    public static String getCurrentId() {
         return userIdHolder.get();
     }
 
@@ -17,16 +18,28 @@ public class BaseContext {
         userIdHolder.remove();
     }
 
-    public static void setCurrentRole(String role) {
+    public static void setCurrentRole(Long role) {
         roleHolder.set(role);
     }
 
-    public static String getCurrentRole() {
+    public static Long getCurrentRole() {
         return roleHolder.get();
     }
 
     public static void removeCurrentRole() {
         roleHolder.remove();
+    }
+
+    public static void setCurrentComId(Integer comId) {
+        comIdHolder.set(comId);
+    }
+
+    public static Integer getCurrentComId() {
+        return comIdHolder.get();
+    }
+
+    public static void removeCurrentComId() {
+        comIdHolder.remove();
     }
 }
 

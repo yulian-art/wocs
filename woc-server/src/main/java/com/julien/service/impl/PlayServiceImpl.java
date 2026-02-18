@@ -1,20 +1,21 @@
 package com.julien.service.impl;
 
 import com.julien.constant.ErrorMessageConstant;
-import com.julien.constant.StatusConstant;
+import com.julien.constant.RoleConstant;
+import com.julien.context.BaseContext;
 import com.julien.dto.LoginDTO;
 import com.julien.entity.Competition;
 import com.julien.entity.User;
-import com.julien.exception.AccountLockedException;
 import com.julien.exception.AccountNotFoundException;
 import com.julien.exception.PasswordErrorException;
 import com.julien.mapper.CompetitionListMapper;
 import com.julien.mapper.UserMapper;
 import com.julien.service.PlayerService;
-import com.julien.vo.CompetitionListVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
+
+import java.util.List;
 
 @Service
 public class PlayServiceImpl implements PlayerService {
@@ -52,6 +53,23 @@ public class PlayServiceImpl implements PlayerService {
 
     @Override
     public Competition competitionList(){
+        Long role = BaseContext.getCurrentRole();
+
+
+
+
+        if(role.equals(RoleConstant.SUPER_ADMIN) || role.equals(RoleConstant.ACADEMY)){
+            List<Competition> competition = competitionListMapper.listByAdmin();
+
+        } else if (role.equals(RoleConstant.CAPTAIN)) {
+            Integer comId  = BaseContext.getCurrentComId();
+            List<Competition> competition = competitionListMapper.listByCaptain(comId);
+
+
+        }
+
+        return new Competition();
+
 
 
     }
