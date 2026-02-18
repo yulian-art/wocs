@@ -1,0 +1,48 @@
+server:
+  port: 8080
+
+spring:
+  profiles:
+    active: dev
+  main:
+    allow-circular-references: true
+  datasource:
+    druid:
+      driver-class-name: ${julien.datasource.driver-class-name}
+      url: jdbc:mysql://${julien.datasource.host}:${julien.datasource.port}/${julien.datasource.database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+      username: ${julien.datasource.username}
+      password: ${julien.datasource.password}
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+mybatis:
+  #mapper??
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.julien.entity
+  configuration:
+    #??????
+    map-underscore-to-camel-case: true
+
+logging:
+  level:
+    com:
+      julien:
+        mapper: debug
+        service: info
+        controller: info
+
+user:
+  jwt:
+    # ??jwt????key
+    secret-key: itcast
+    # ??jwt????
+    ttl: 7200000
+    # ?????????????
+    token-name: token
+  alioss:
+    endpoint: ${julien.alioss.endpoint}
+    access-key-id: ${julien.alioss.access-key-id}
+    access-key-secret: ${julien.alioss.access-key-secret}
+    bucket-name: ${julien.alioss.bucket-name}
+

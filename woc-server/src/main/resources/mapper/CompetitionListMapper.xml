@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.julien.mapper.CompetitionListMapper">
+
+    <select id="listByAdmin" resultType="Competition">
+        select * from competition
+        order by create_time desc
+    </select>
+
+    <select id="listByCaptain" resultType="Competition">
+        SELECT DISTINCT c.*
+        FROM competition c
+        JOIN user u ON u.com_id = c.id
+
+        WHERE u.com_id = #{com_id}
+        ORDER BY c.create_time DESC;
+    </select>
+
+</mapper>

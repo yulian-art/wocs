@@ -1,0 +1,76 @@
+package com.julien.controller.captain;
+
+import com.julien.constant.JwtClaimsConstant;
+import com.julien.context.BaseContext;
+import com.julien.dto.LoginDTO;
+import com.julien.entity.Competition;
+import com.julien.entity.User;
+import com.julien.properties.JwtProperties;
+import com.julien.result.Result;
+import com.julien.service.PlayerService;
+import com.julien.utils.JwtUtil;
+import com.julien.vo.CompetitionListVO;
+import com.julien.vo.LoginVO;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.julien.result.Result.success;
+
+@RestController
+@RequestMapping
+@Slf4j
+@Api(tags = "队长相关接口")
+public class PlayerController {
+
+    @Autowired
+    private PlayerService playerService;
+
+    @Autowired
+    private JwtProperties jwtProperties;
+
+
+    @PostMapping("/login")
+    @ApiOperation(value = "队长登录")
+    public Result<LoginVO> login(LoginDTO loginDTO) {
+        log.info("登录参数：{}", loginDTO);
+
+        User user = playerService.login(loginDTO);
+
+        Map<String, Object> claims = new HashMap<>();
+        claims.put(JwtClaimsConstant.USER_CODE, user.getUserCode());
+        claims.put(JwtClaimsConstant.ROLE, user.getRole());
+        String token = JwtUtil.createJwt(
+                jwtProperties.getSecretKey(),
+                jwtProperties.getTtl(),
+                claims);
+
+        LoginVO loginVO = LoginVO.builder()
+                .token(token)
+                .build();
+
+        return success( loginVO);
+    }
+
+    @GetMapping("/competitions")
+    @ApiOperation("获取比赛列表")
+    public Result<CompetitionListVO> competitionList(){
+        log.info("获取比赛列表");
+
+        Long userCode = BaseContext.getCurrentId();
+        String role = BaseContext.getCurrentRole();
+
+        Competition competition = playerService.competitionlists();
+
+        ruturn Result.success(CompetitionListVO);
+
+    }
+}
