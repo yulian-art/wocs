@@ -2,8 +2,11 @@ package com.julien.controller.captain;
 
 import com.julien.constant.JwtClaimsConstant;
 import com.julien.context.BaseContext;
+import com.julien.dto.AddMemberDTO;
 import com.julien.dto.LoginDTO;
 import com.julien.entity.Competition;
+import com.julien.entity.Member;
+import com.julien.entity.Team;
 import com.julien.entity.User;
 import com.julien.properties.JwtProperties;
 import com.julien.result.Result;
@@ -13,13 +16,11 @@ import com.julien.vo.CompetitionListVO;
 import com.julien.vo.LoginVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+
+import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -76,6 +77,31 @@ public class PlayerController {
 
 
         return Result.success(competition);
+    }
+
+    @PostMapping("/captain/team/{teamId}/member")
+    @ApiOperation("添加成员")
+
+    public Result save(@PathVariable Integer teamId, @RequestBody AddMemberDTO addMemberDTO){
+
+        log.info("队伍id: {} 新增成员：{}",teamId,addMemberDTO);
+
+        playerService.save(teamId,addMemberDTO);
+
+        return Result.success();
+    }
+
+
+
+
+    @GetMapping("/captain/team")
+    @ApiOperation("获取队伍信息")
+
+    public Result<Team> teamList(){
+        log.info("获取队伍信息");
+
+        Team team = playerService.teamList();
+        return Result.success(team);
     }
 
 }

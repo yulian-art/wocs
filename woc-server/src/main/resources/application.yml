@@ -46,3 +46,5 @@ user:
     access-key-secret: ${julien.alioss.access-key-secret}
     bucket-name: ${julien.alioss.bucket-name}
 
+knife4j:
+  enable: true
