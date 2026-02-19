@@ -15,7 +15,7 @@
         FROM competition c
         JOIN user u ON u.com_id = c.id
 
-        WHERE u.com_id = #{com_id}
+        WHERE u.com_id = #{comId}
         ORDER BY c.create_time DESC;
     </select>
 

@@ -18,12 +18,14 @@ public class Result<T> implements Serializable {
 
     public static <T> Result<T> success() {
         Result<T> result = new Result<T>();
+        result.success = true;
         result.errCode = 1;
         return result;
     }
 
     public static <T> Result<T> success(T object) {
         Result<T> result = new Result<T>();
+        result.success = true;
         result.data = object;
         result.errCode = 1;
         return result;
@@ -31,6 +33,7 @@ public class Result<T> implements Serializable {
 
     public static <T> Result<T> error(String msg) {
         Result result = new Result();
+        result.success = true;
         result.errMsg = msg;
         result.errCode = 0;
         return result;

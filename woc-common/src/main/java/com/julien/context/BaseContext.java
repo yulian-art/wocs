@@ -3,9 +3,10 @@ package com.julien.context;
 public class BaseContext {
 
     private static ThreadLocal<String> userIdHolder = new ThreadLocal<>();
-    private static ThreadLocal<Long> roleHolder = new ThreadLocal<>();
+    private static ThreadLocal<Integer> roleHolder = new ThreadLocal<>();
 
     private static ThreadLocal<Integer> comIdHolder = new ThreadLocal<>();
+    
     public static void setCurrentId(String id) {
         userIdHolder.set(id);
     }
@@ -18,11 +19,11 @@ public class BaseContext {
         userIdHolder.remove();
     }
 
-    public static void setCurrentRole(Long role) {
+    public static void setCurrentRole(Integer role) {
         roleHolder.set(role);
     }
 
-    public static Long getCurrentRole() {
+    public static Integer getCurrentRole() {
         return roleHolder.get();
     }
 

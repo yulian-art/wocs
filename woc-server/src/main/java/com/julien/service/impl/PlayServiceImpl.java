@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -52,25 +53,18 @@ public class PlayServiceImpl implements PlayerService {
     private CompetitionListMapper competitionListMapper;
 
     @Override
-    public Competition competitionList(){
-        Long role = BaseContext.getCurrentRole();
-
-
-
-
-        if(role.equals(RoleConstant.SUPER_ADMIN) || role.equals(RoleConstant.ACADEMY)){
-            List<Competition> competition = competitionListMapper.listByAdmin();
-
+    public List<Competition> competitionList(String userCode, Integer role) {
+        if (role.equals(RoleConstant.SUPER_ADMIN) || role.equals(RoleConstant.ACADEMY)) {
+            return competitionListMapper.listByAdmin();
         } else if (role.equals(RoleConstant.CAPTAIN)) {
-            Integer comId  = BaseContext.getCurrentComId();
-            List<Competition> competition = competitionListMapper.listByCaptain(comId);
-
-
+            Integer comId = BaseContext.getCurrentComId();
+            if (comId == null) {
+                throw new RuntimeException("未找到队伍ID");
+            }
+            return competitionListMapper.listByCaptain(comId);
         }
-
-        return new Competition();
-
-
-
+        return new ArrayList<>();
     }
+
+
 }

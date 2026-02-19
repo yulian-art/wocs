@@ -1,10 +1,6 @@
 package com.julien.utils;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtBuilder;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-
+import io.jsonwebtoken.*;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.Map;
@@ -34,7 +30,7 @@ public class JwtUtil {
 
                 .setSigningKey(secretKey.getBytes(StandardCharsets.UTF_8))
 
-                .parseClaimsJwt(token)
+                .parseClaimsJws(token)  // 修改这里：使用 parseClaimsJws 而不是 parseClaimsJwt
 
                 .getBody();
 

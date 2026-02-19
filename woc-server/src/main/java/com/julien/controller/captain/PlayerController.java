@@ -13,6 +13,7 @@ import com.julien.vo.CompetitionListVO;
 import com.julien.vo.LoginVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +21,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.julien.result.Result.success;
@@ -40,7 +43,7 @@ public class PlayerController {
 
     @PostMapping("/login")
     @ApiOperation(value = "队长登录")
-    public Result<LoginVO> login(LoginDTO loginDTO) {
+    public Result<LoginVO> login(@RequestBody LoginDTO loginDTO) {
         log.info("登录参数：{}", loginDTO);
 
         User user = playerService.login(loginDTO);
@@ -48,6 +51,7 @@ public class PlayerController {
         Map<String, Object> claims = new HashMap<>();
         claims.put(JwtClaimsConstant.USER_CODE, user.getUserCode());
         claims.put(JwtClaimsConstant.ROLE, user.getRole());
+        claims.put(JwtClaimsConstant.COM_ID,user.getComId());
         String token = JwtUtil.createJwt(
                 jwtProperties.getSecretKey(),
                 jwtProperties.getTtl(),
@@ -57,20 +61,21 @@ public class PlayerController {
                 .token(token)
                 .build();
 
-        return success( loginVO);
+        return success(loginVO);
     }
 
     @GetMapping("/competitions")
     @ApiOperation("获取比赛列表")
-    public Result<Competition> competitionList(){
+    public Result<List<Competition>> competitionList(){
         log.info("获取比赛列表");
 
         String userCode = BaseContext.getCurrentId();
-        Long role = BaseContext.getCurrentRole();
+        Integer role = BaseContext.getCurrentRole();
 
-        Competition competition = playerService.competitionList();
+        List<Competition> competition = playerService.competitionList(userCode,role);
+
 
         return Result.success(competition);
-
     }
+
 }
