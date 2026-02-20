@@ -5,16 +5,14 @@ import com.julien.constant.RoleConstant;
 import com.julien.context.BaseContext;
 import com.julien.dto.AddMemberDTO;
 import com.julien.dto.LoginDTO;
+import com.julien.dto.UpdateTeamDTO;
 import com.julien.entity.Competition;
 import com.julien.entity.Member;
 import com.julien.entity.Team;
 import com.julien.entity.User;
 import com.julien.exception.AccountNotFoundException;
 import com.julien.exception.PasswordErrorException;
-import com.julien.mapper.CompetitionListMapper;
-import com.julien.mapper.MemberMapper;
-import com.julien.mapper.TeamListMapper;
-import com.julien.mapper.UserMapper;
+import com.julien.mapper.*;
 import com.julien.service.PlayerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -110,7 +108,7 @@ public class PlayServiceImpl implements PlayerService {
 
 
 
-  @Autowired
+    @Autowired
     private TeamListMapper teamListMapper;
 
     @Override
@@ -122,5 +120,19 @@ public class PlayServiceImpl implements PlayerService {
         return team;
     }
 
+
+    @Autowired
+    private UpdateTeamMapper updateTeamMapper;
+
+    public Team update(UpdateTeamDTO updateTeamDTO){
+
+        updateTeamMapper.insert(updateTeamDTO);
+
+        Team team = new Team();
+        BeanUtils.copyProperties(updateTeamDTO, team);
+
+
+        return team;
+    }
 
 }

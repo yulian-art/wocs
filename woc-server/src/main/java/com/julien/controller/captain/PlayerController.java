@@ -4,6 +4,7 @@ import com.julien.constant.JwtClaimsConstant;
 import com.julien.context.BaseContext;
 import com.julien.dto.AddMemberDTO;
 import com.julien.dto.LoginDTO;
+import com.julien.dto.UpdateTeamDTO;
 import com.julien.entity.Competition;
 import com.julien.entity.Member;
 import com.julien.entity.Team;
@@ -14,6 +15,7 @@ import com.julien.service.PlayerService;
 import com.julien.utils.JwtUtil;
 import com.julien.vo.CompetitionListVO;
 import com.julien.vo.LoginVO;
+import com.julien.vo.UpdateTeamVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -92,6 +94,9 @@ public class PlayerController {
     }
 
 
+    @DeleteMapping("/captain/team/{teamId}/member")
+    @ApiOperation("删除队员")
+    public Result deleteMember(@PathVariable Integer teamId,@RequestBody DeleteMemberDTO deleteMemberDTO)
 
 
     @GetMapping("/captain/team")
@@ -103,5 +108,30 @@ public class PlayerController {
         Team team = playerService.teamList();
         return Result.success(team);
     }
+
+    @PostMapping("/captain/team")
+    @ApiOperation("更新队伍信息")
+    public Result<UpdateTeamVO> update(@RequestBody UpdateTeamDTO updateTeamDTO){
+        log.info("更新{}", updateTeamDTO);
+        
+        // 调用服务方法获取Team对象
+        Team updatedTeam = playerService.update(updateTeamDTO);
+        
+        // 将Team对象转换为UpdateTeamVO
+        UpdateTeamVO updateTeamVO = UpdateTeamVO.builder()
+            .id(updatedTeam.getId())
+                .comId(updatedTeam.getComId())
+            .name(updatedTeam.getName())
+            .captainId(updatedTeam.getCaptainId())
+            .captainName(updatedTeam.getCaptainName())
+            .status(updatedTeam.getStatus())
+                .memberIds(updatedTeam.getMemberIds())
+                .instructorIds(updatedTeam.getInstructorIds())
+                .createTime(updatedTeam.getCreateTime())
+            .build();
+    
+        return Result.success(updateTeamVO);
+    }
+
 
 }

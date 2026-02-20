@@ -8,11 +8,10 @@
     <select id="teamList" resultType="com.julien.entity.Team">
         SELECT DISTINCT t.*
         FROM team t
-        JOIN user u ON u.com_id = t.comId
+        JOIN user u ON u.com_id = t.com_id
 
         WHERE t.com_id = #{comId}
         ORDER BY t.create_time DESC;
     </select>
-
 
 </mapper>

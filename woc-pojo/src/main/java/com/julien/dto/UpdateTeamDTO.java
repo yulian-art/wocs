@@ -1,18 +1,13 @@
-package com.julien.entity;
+package com.julien.dto;
 
+import lombok.Data;
+
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 @Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class Team {
+public class UpdateTeamDTO implements Serializable {
     private Long id;
     private Long comId;
     private String name;
@@ -21,6 +16,6 @@ public class Team {
     private Byte status;
     private List<Long> memberIds;
     private List<Long> instructorIds;
-
-    private LocalDateTime createTime;
+    private LocalDateTime createTime;  // 添加创建时间字段
+    private LocalDateTime updateTime;  // 添加更新时间字段
 }

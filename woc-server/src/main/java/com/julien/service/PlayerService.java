@@ -2,6 +2,7 @@ package com.julien.service;
 
 import com.julien.dto.AddMemberDTO;
 import com.julien.dto.LoginDTO;
+import com.julien.dto.UpdateTeamDTO;
 import com.julien.entity.Competition;
 import com.julien.entity.Member;
 import com.julien.entity.Team;
@@ -19,4 +20,6 @@ public interface PlayerService {
     void save(Integer teamId, AddMemberDTO addMemberDTO);
 
     Team teamList();
+
+    Team update(UpdateTeamDTO updateTeamDTO);
 }
