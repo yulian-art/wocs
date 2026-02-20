@@ -3,9 +3,7 @@ package com.julien.service.impl;
 import com.julien.constant.ErrorMessageConstant;
 import com.julien.constant.RoleConstant;
 import com.julien.context.BaseContext;
-import com.julien.dto.AddMemberDTO;
-import com.julien.dto.LoginDTO;
-import com.julien.dto.UpdateTeamDTO;
+import com.julien.dto.*;
 import com.julien.entity.Competition;
 import com.julien.entity.Member;
 import com.julien.entity.Team;
@@ -56,24 +54,24 @@ public class PlayServiceImpl implements PlayerService {
     }
 
     @Autowired
-    private CompetitionListMapper competitionListMapper;
+    private CompetitionMapper competitionMapper;
 
     @Override
     public List<Competition> competitionList(String userCode, Integer role) {
         if (role.equals(RoleConstant.SUPER_ADMIN) || role.equals(RoleConstant.ACADEMY)) {
-            return competitionListMapper.listByAdmin();
+            return competitionMapper.listByAdmin();
         } else if (role.equals(RoleConstant.CAPTAIN)) {
             Integer comId = BaseContext.getCurrentComId();
             if (comId == null) {
                 throw new RuntimeException("未找到队伍ID");
             }
-            return competitionListMapper.listByCaptain(comId);
+            return competitionMapper.listByCaptain(comId);
         }
         return new ArrayList<>();
     }
 
     @Autowired
-    MemberMapper memberMapper;
+    private MemberMapper memberMapper;
 
     public void save(Integer teamId, AddMemberDTO addMemberDTO){
         log.info("开始保存成员信息，teamId: {}, addMemberDTO: {}", teamId, addMemberDTO);
@@ -107,26 +105,46 @@ public class PlayServiceImpl implements PlayerService {
     }
 
 
+    public void delete(Integer teamId, DeleteMemberDTO deleteMemberDTO){
+        //List<Member> team = memberMapper.getByTeamId(teamId);
+
+
+        //if(team == null){
+        //    throw new IllegalArgumentException("队伍不存在");
+        //}
+
+
+        Integer id = deleteMemberDTO.getId();
+
+        memberMapper.removeMemberFromTeam(teamId,id);
+    }
+
+    public void updateMember(Integer teamId, UpdateMemberDTO updateMemberDTO){
+
+        Member member = new Member();
+        BeanUtils.copyProperties(updateMemberDTO,member);
+
+        memberMapper.updateById(member);
+    }
+
+
 
     @Autowired
-    private TeamListMapper teamListMapper;
+    private TeamMapper teamMapper;
 
     @Override
     public Team teamList(){
-
         Integer comId = BaseContext.getCurrentComId();
-        Team team = teamListMapper.teamList(comId);
-
+        Team team = teamMapper.teamList(comId);
         return team;
     }
 
 
-    @Autowired
-    private UpdateTeamMapper updateTeamMapper;
 
-    public Team update(UpdateTeamDTO updateTeamDTO){
 
-        updateTeamMapper.insert(updateTeamDTO);
+    public Team updateTeam(UpdateTeamDTO updateTeamDTO){
+
+        teamMapper.insert(updateTeamDTO);
 
         Team team = new Team();
         BeanUtils.copyProperties(updateTeamDTO, team);

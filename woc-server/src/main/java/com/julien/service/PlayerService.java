@@ -1,10 +1,7 @@
 package com.julien.service;
 
-import com.julien.dto.AddMemberDTO;
-import com.julien.dto.LoginDTO;
-import com.julien.dto.UpdateTeamDTO;
+import com.julien.dto.*;
 import com.julien.entity.Competition;
-import com.julien.entity.Member;
 import com.julien.entity.Team;
 import com.julien.entity.User;
 
@@ -21,5 +18,9 @@ public interface PlayerService {
 
     Team teamList();
 
-    Team update(UpdateTeamDTO updateTeamDTO);
+    Team updateTeam(UpdateTeamDTO updateTeamDTO);
+
+    void delete(Integer teamId, DeleteMemberDTO deleteMemberDTO);
+
+    void updateMember(Integer teamId, UpdateMemberDTO updateMemberDTO);
 }

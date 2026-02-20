@@ -1,13 +1,12 @@
 package com.julien.mapper;
 
 import com.julien.entity.Competition;
-import com.julien.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
 @Mapper
-public interface CompetitionListMapper {
+public interface CompetitionMapper {
 
     List<Competition> listByAdmin();
 

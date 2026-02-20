@@ -16,10 +16,13 @@ public class Result<T> implements Serializable {
     private String errMsg; //错误信息
     private T data; //数据
 
+
     public static <T> Result<T> success() {
         Result<T> result = new Result<T>();
         result.success = true;
         result.errCode = 1;
+        result.errMsg = "success";
+
         return result;
     }
 
@@ -28,6 +31,7 @@ public class Result<T> implements Serializable {
         result.success = true;
         result.data = object;
         result.errCode = 1;
+        result.errMsg = "success";
         return result;
     }
 
@@ -36,6 +40,7 @@ public class Result<T> implements Serializable {
         result.success = true;
         result.errMsg = msg;
         result.errCode = 0;
+        result.errMsg = "";
         return result;
     }
 

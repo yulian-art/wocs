@@ -1,4 +1,10 @@
 package com.julien.dto;
 
-public class DeleteMemberDTO {
+import lombok.Data;
+
+import java.io.Serializable;
+
+@Data
+public class DeleteMemberDTO implements Serializable {
+    private Integer id;
 }
