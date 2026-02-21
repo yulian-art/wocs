@@ -6,6 +6,7 @@ import com.julien.entity.Team;
 import com.julien.enumeration.OperationType;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 @Mapper
 public interface TeamMapper {
@@ -19,4 +20,7 @@ public interface TeamMapper {
 
 
     Team teamList(Integer comId);
+
+    @Select("select * from team where com_id = #{comId} limit 1")
+    Team getOneByComId(Integer comId);
 }

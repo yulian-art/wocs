@@ -7,7 +7,7 @@ julien:
     username: root
     password: Lyx88888888.@
   alioss:
-    endpoint: oss-cn-shanghai.aliyuncs.com
-    access-key-id: LTAI5t9TMsy33AW4JwrSyVqz
-    access-key-secret: ztp8LTRJ09QVu34c0WqQ4ncXqeBwDO
-    bucket-name: web-sky-julien
+    endpoint:
+    access-key-id:
+    access-key-secret:
+    bucket-name:

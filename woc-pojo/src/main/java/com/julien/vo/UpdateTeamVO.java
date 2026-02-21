@@ -20,8 +20,8 @@ public class UpdateTeamVO implements Serializable {
     private Long captainId;
     private String captainName;
     private Byte status;              // Byte也行，但Integer更省事
-    private List<Long> memberIds;        // ✅ 改这里
-    private List<Long> instructorIds;    // ✅ 改这里
+    private List<Long> memberIds;
+    private List<Long> instructorIds;
     private LocalDateTime createTime;
 
 }

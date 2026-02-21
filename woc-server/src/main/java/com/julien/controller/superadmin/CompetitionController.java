@@ -1,4 +1,4 @@
-package com.julien.controller.academy;
+package com.julien.controller.superadmin;
 
 
 import com.julien.dto.BuildCompetitionDTO;
