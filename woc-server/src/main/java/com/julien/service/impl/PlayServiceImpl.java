@@ -12,6 +12,7 @@ import com.julien.exception.AccountNotFoundException;
 import com.julien.exception.PasswordErrorException;
 import com.julien.mapper.*;
 import com.julien.service.PlayerService;
+import com.julien.vo.MemberListVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import org.springframework.util.DigestUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -84,7 +86,7 @@ public class PlayServiceImpl implements PlayerService {
         
         // 设置teamId，添加空值检查
         if (teamId != null) {
-            member.setTeamId(teamId.longValue());
+            member.setTeamId(teamId);
             log.info("设置teamId为: {}", member.getTeamId());
         } else {
             log.error("teamId为空，无法设置");
@@ -151,6 +153,27 @@ public class PlayServiceImpl implements PlayerService {
 
 
         return team;
+    }
+
+    @Autowired
+    private AcademyMapper academyMapper;
+
+    public List<MemberListVO> memberList(Integer teamId){
+        List<Member> members = memberMapper.getByTeamId(teamId);
+
+        return members.stream()
+                .map(member -> {  // 遍历 members 列表
+                    MemberListVO vo = new MemberListVO();  // 创建一个新的 MemberVO 对象
+
+                    vo.setStudentId(member.getStudentId());
+                    vo.setName(member.getName());
+
+                    String academy = academyMapper.getAcademyNameById(member.getAcademyId());
+                    vo.setAcademy(academy);
+                    return vo;
+                })
+                .collect(Collectors.toList());  // 最后将所有的 vo 对象收集到一个 List 中
+
     }
 
 }

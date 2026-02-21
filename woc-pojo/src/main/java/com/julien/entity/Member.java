@@ -12,11 +12,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Member {
-    private Long id;
+    private Integer id;
     private String name;
     private String studentId;
-    private Long teamId;
-    private Long academyId;
+    private Integer teamId;
+    private Integer academyId;
     private String phone;
     private Byte isCaptain;
     private LocalDateTime createTime;  // 添加创建时间字段

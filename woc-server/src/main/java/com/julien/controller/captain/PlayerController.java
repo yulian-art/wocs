@@ -11,6 +11,7 @@ import com.julien.result.Result;
 import com.julien.service.PlayerService;
 import com.julien.utils.JwtUtil;
 import com.julien.vo.LoginVO;
+import com.julien.vo.MemberListVO;
 import com.julien.vo.UpdateTeamVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -147,7 +148,13 @@ public class PlayerController {
 
     @GetMapping("/captain/team/{teamId}/member")
     @ApiOperation("获取成员列表")
-    public Result<MemberListVO>
+    public Result<List<MemberListVO>> memberList(@PathVariable Integer teamId){
+        log.info("获取成员列表：{}",teamId);
+
+        List<MemberListVO> memberListVO = playerService.memberList(teamId);
+
+        return Result.success(memberListVO);
+    }
 
 
 }

@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Academy {
-    private Long id;
+    private Integer id;
     private String name;
 }

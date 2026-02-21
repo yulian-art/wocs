@@ -4,6 +4,7 @@ import com.julien.dto.*;
 import com.julien.entity.Competition;
 import com.julien.entity.Team;
 import com.julien.entity.User;
+import com.julien.vo.MemberListVO;
 
 import java.util.List;
 
@@ -23,4 +24,6 @@ public interface PlayerService {
     void delete(Integer teamId, DeleteMemberDTO deleteMemberDTO);
 
     void updateMember(Integer teamId, UpdateMemberDTO updateMemberDTO);
+
+    List<MemberListVO> memberList(Integer teamId);
 }
