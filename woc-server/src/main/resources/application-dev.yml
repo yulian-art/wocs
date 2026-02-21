@@ -6,8 +6,3 @@ julien:
     database: sast_approval
     username: root
     password: Lyx88888888.@
-  alioss:
-    endpoint:
-    access-key-id:
-    access-key-secret:
-    bucket-name:

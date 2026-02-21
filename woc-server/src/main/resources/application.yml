@@ -40,11 +40,7 @@ user:
     ttl: 7200000
     # ?????????????
     token-name: token
-  alioss:
-    endpoint: ${julien.alioss.endpoint}
-    access-key-id: ${julien.alioss.access-key-id}
-    access-key-secret: ${julien.alioss.access-key-secret}
-    bucket-name: ${julien.alioss.bucket-name}
+
 
 knife4j:
   enable: true
